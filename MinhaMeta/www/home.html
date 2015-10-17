@@ -1,0 +1,46 @@
+<ion-view title="Home">
+  
+  <ion-content>
+    
+    <div ng-show="viewState===0" class="centerContent">
+      <br>
+      <br>
+      <br>
+      <br>
+      <ion-spinner icon="android"></ion-spinner>
+    </div>
+
+    <div ng-show="viewState===1" class="centerContent">
+     <h1 id="bembindo">
+        Ola, crie agora mesmo uma meta
+        e começe a concluir seus
+        objetivos!
+      </h1>
+
+      <img src="img/meta1.png" alt="Meta">
+
+      <br>
+
+      <button class="button button-balanced button-big" ng-click="criarMeta()">
+        Criar uma meta
+      </button>
+    </div>
+
+    <div ng-show="viewState===2">
+      <div class="list">
+          <a class="item" href="#" ng-repeat="meta in metas" ng-click="verMeta(meta)">
+  
+            <div class="progresso">
+                <i class="icon ion-trophy" ng-show="meta.concluido/meta.minutos * 100 >= 100"></i>
+                {{(meta.concluido/meta.minutos * 100).toFixed(0)}}%
+            </div>
+            <h2>{{meta.nome}}</h2>
+            <p>{{meta.descricao}}</p>
+          </a>
+      </div>
+    </div>
+
+
+  </ion-content>
+
+</ion-view>

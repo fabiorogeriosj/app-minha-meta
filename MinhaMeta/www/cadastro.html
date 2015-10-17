@@ -1,0 +1,28 @@
+<ion-view title="Cadastro">
+  <ion-content class="centerContent">
+   
+  <div class="list list-inset form-meta">
+	  
+	  <label class="item item-input">
+	    <i class="icon ion-pricetag placeholder-icon"></i>
+	    <input type="text" placeholder="Nome da meta" ng-model="meta.nome">
+	  </label>
+
+	  <label class="item item-input">
+	    <i class="icon ion-document-text placeholder-icon"></i>
+	    <input type="text" placeholder="Descrição da meta" ng-model="meta.descricao">
+	  </label>
+
+	  <label class="item item-input">
+	    <i class="icon ion-android-time placeholder-icon"></i>
+	    <input type="number" placeholder="Horas da meta" ng-model="meta.minutos">
+	  </label>
+
+	</div>
+
+	<button class="button button-balanced" ng-click="criarMeta()">
+	  Criar nova meta
+	</button>
+
+  </ion-content>
+</ion-view>
