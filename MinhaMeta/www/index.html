@@ -15,10 +15,14 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+
+    <script src="lib/ng-cordova.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
-    <script src="cordova.js"></script>
+    <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+<!-- <script src="cordova.js"></script> -->
+    
 
     <script src="lib/moment.min.js"></script>
 
@@ -33,7 +37,7 @@
           <i class="icon ion-checkmark-circled"></i>
           Minha Meta
         </h1>
-        <button class="button button-icon icon ion-plus-round" ng-show="viewState===2 && !showMenu" ng-click="criarMeta()"></button>
+        <button class="button button-icon icon ion-plus-round" ng-show="viewState===2 &amp;&amp; !showMenu" ng-click="criarMeta()"></button>
         <button class="button button-icon icon ion-android-more-vertical" ng-if="showMenu" ng-click="openPopover($event)"></button>
       </ion-header-bar>
 

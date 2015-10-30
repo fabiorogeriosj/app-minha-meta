@@ -88,7 +88,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 .info-meta {
 	background-image: url(../img/background.jpg);
-	background-repeat: no-repeat;
 	background-position: center;
 	font-family: 'Open Sans', sans-serif;
 	padding-top: 50px;
@@ -153,7 +152,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 	left: 50%;
 	margin-left: -100px;
 	margin-top: 20px;
-	-webkit-animation: rotation 45s infinite linear;
+	-webkit-transition: all 5000ms linear;
+	-moz-transition: all 5000ms linear;
+	-ms-transition: all 5000ms linear;
+	-o-transition: all 5000ms linear;
+	transition: all 5000ms linear;
 }
 .time-meta .marcador {
 	width: 25px;

@@ -1,6 +1,6 @@
 var DB = null;
 
-var app = angular.module('starter', ['ionic','ngCordova']);
+var app = angular.module('starter', ['ionic','ionic.service.core','ngCordova']);
 
 app.run(function($ionicPlatform, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
@@ -12,8 +12,14 @@ app.run(function($ionicPlatform, $cordovaSQLite) {
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-
-    DB = window.openDatabase("minha_meta.db", "1.0", "MinhaMeta", -1);
+    if(window.cordova) {
+      // App syntax
+      DB = $cordovaSQLite.openDB("appmeta.db");
+    } else {
+      // Ionic serve syntax
+      DB = window.openDatabase("appmeta.db", "1.0", "MinhaMeta", -1);
+    }
+    //DB = window.openDatabase("minha_meta.db", "1.0", "MinhaMeta", -1);
     
     //$cordovaSQLite.execute(DB, "DROP TABLE meta");
 
@@ -47,13 +53,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
   })
 })
 
-app.controller('IndexController', ['$scope','$state','$cordovaSQLite','$rootScope', function($scope,$state,$cordovaSQLite,$rootScope){
+app.controller('IndexController', function($scope,$state,$cordovaSQLite,$rootScope,$ionicPlatform){
   $rootScope.viewState=0;
   $scope.metas = [];
-
   $scope.list = function(){
     var query = "SELECT * FROM meta ORDER BY id DESC";
     $cordovaSQLite.execute(DB, query, []).then(function (result){
+      
       if(result.rows.length){
         $rootScope.viewState=2;
         var output = [];
@@ -70,7 +76,9 @@ app.controller('IndexController', ['$scope','$state','$cordovaSQLite','$rootScop
     });
   }
 
-  $scope.list();
+  $ionicPlatform.ready(function() {
+    $scope.list();
+  });
 
   $rootScope.criarMeta = function (){
     $state.go("cadastro");
@@ -90,7 +98,7 @@ app.controller('IndexController', ['$scope','$state','$cordovaSQLite','$rootScop
     }
   })
 
-}]);
+});
 
 app.controller('CadastroController', ['$scope','$state','$cordovaSQLite','$ionicHistory', function($scope,$state,$cordovaSQLite,$ionicHistory){
   $scope.meta = {};
@@ -99,7 +107,7 @@ app.controller('CadastroController', ['$scope','$state','$cordovaSQLite','$ionic
     var pars = [$scope.meta.nome, $scope.meta.descricao, $scope.meta.minutos*60];
     console.log("pars", pars);
     $cordovaSQLite.execute(DB, query, pars).then(function (result){
-      console.log("INSERT: ", result.insertId);
+      console.log("INSERT: "+ result.insertId);
       $ionicHistory.goBack(); 
     }, function(err){
       console.log("error SQL: ", err);
@@ -165,7 +173,7 @@ app.controller('MetaController', ['$scope','$state','$cordovaSQLite','$ionicHist
         $scope.minutos++;
         $scope.segundos=0;
       }
-      if($scope.minutos==60){
+      if($scope.minutos == 60){
         $scope.horas++;        
         $scope.minutos=0;
       }
@@ -176,19 +184,19 @@ app.controller('MetaController', ['$scope','$state','$cordovaSQLite','$ionicHist
     $scope.rodando=true;
     $scope.deg = 0;
     $scope.segundos = 1;
-    $scope.minutos = 0;
-    $scope.horas = 0;
+    $scope.minutos = 12;
+    $scope.horas = 2;
     $scope.rotate = function (angle) {
         $scope.angle = angle;
     };
     $scope.stopRotate = $interval(function (){
-      if($scope.deg==359){
-        $scope.deg=0;
-      }
-      $scope.rotate($scope.deg++);
-    },10);
+      $scope.rotate($scope.deg+=360);
+    },5000);
     
     $scope.mytimeout = $timeout($scope.onTimeout,1000);
+    $timeout(function (){
+      $scope.rotate($scope.deg+=360);
+    },100);
   }
 
   $scope.parar = function (){
